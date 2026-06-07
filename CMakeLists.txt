@@ -1,19 +1,21 @@
-cmake_minimum_required(VERSION 4.1)
-project(autograd)
-
+cmake_minimum_required(VERSION 3.20)
+project(autograd LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Your test target (example)
+add_executable(autograd_tests tests/1d/basic.cpp)
+target_link_libraries(autograd_tests PRIVATE autograd gtest_main)
 
 add_library(autograd STATIC
         src/operations.cpp
         src/tensor_one.cpp
-        src/consts.h
-        include/tensor_base.h
         src/node.cpp
-        src/tape/tape.cpp
         src/tape/tape_one.cpp
         src/tape/tape_backward.cpp
         src/tape/tape_string.cpp
+        src/ops/ops_one.cpp
 )
 
 target_include_directories(autograd PUBLIC
@@ -21,7 +23,40 @@ target_include_directories(autograd PUBLIC
 )
 
 target_sources(autograd PRIVATE
+        src/consts.h
+        include/tensor_base.h
         include/tensor_one.h
         include/tape.h
         include/operations.h
 )
+
+# ---- gtest ----
+include(FetchContent)
+set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG release-1.15.0
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(autograd_tests
+        tests/1d/basic.cpp
+)
+
+# Belt-and-braces: force C++ link language for tests
+set_target_properties(autograd_tests PROPERTIES LINKER_LANGUAGE CXX)
+
+target_link_libraries(autograd_tests
+        PRIVATE
+        autograd
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(autograd_tests)
