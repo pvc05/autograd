@@ -9,15 +9,24 @@ namespace autograd {
 
 TensorOne::TensorOne(const std::vector<double>& data, const bool requires_grad,
                      Tape* tape)
-    : TensorBase(requires_grad, tape, /*node_id=*/-1), data(data) {
-  tape->add_node_one(this->data, requires_grad);
+    : TensorBase(requires_grad, tape, -1), data(data) {
+  if (tape != nullptr) {
+    this->node_id = tape->add_node_one(this->data, requires_grad);
+  }
 }
 
-TensorOne::TensorOne(const int size, const double init_value,
+TensorOne::TensorOne(const size_t size, const double init_value,
                      const bool requires_grad, Tape* tape)
-    : TensorBase(requires_grad, tape, /*node_id=*/-1) {
+    : TensorBase(requires_grad, tape, -1) {
   this->data = std::vector(size, init_value);
-  tape->add_node_one(this->data, requires_grad);
+  if (tape != nullptr) {
+    this->node_id = tape->add_node_one(this->data, requires_grad);
+  }
+}
+
+TensorOne::TensorOne(Tape* tape, const size_t node_id)
+    : TensorBase(tape->required_grads[node_id], tape, node_id) {
+  this->data = tape->values_one[node_id];
 }
 
 size_t TensorOne::size() const { return this->data.size(); }

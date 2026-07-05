@@ -20,10 +20,10 @@ class TensorBase {
  public:
   bool requires_grad;  // does this tensor actually contribute to gradient
   Tape* tape;          // pointer to the tape for comp graph
-  int node_id;         // id for comp graph
+  size_t node_id;      // id for comp graph
 
-  explicit TensorBase(bool requires_grad = false, Tape* tape = nullptr,
-                      int node_id = -1)
+  explicit TensorBase(const bool requires_grad = false, Tape* tape = nullptr,
+                      const size_t node_id = -1)
       : requires_grad(requires_grad), tape(tape), node_id(node_id) {};
 
   void backward();  // initiate backprop from this tensor
@@ -33,7 +33,7 @@ class TensorBase {
   [[nodiscard]] std::string to_string() const;
 
  private:
-  size_t id;
+  size_t id{};
 };
 }  // namespace autograd
 

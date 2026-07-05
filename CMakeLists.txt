@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.20)
+set(CMAKE_CXX_COMPILER "clang++")
 project(autograd LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Your test target (example)
-add_executable(autograd_tests tests/1d/basic.cpp)
-target_link_libraries(autograd_tests PRIVATE autograd gtest_main)
 
 add_library(autograd STATIC
         src/operations.cpp
@@ -39,7 +37,7 @@ include(FetchContent)
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG release-1.15.0
+        GIT_TAG v1.15.0
 )
 FetchContent_MakeAvailable(googletest)
 
@@ -47,6 +45,7 @@ enable_testing()
 
 add_executable(autograd_tests
         tests/1d/basic.cpp
+        tests/1d/basic_tape.cpp
 )
 
 # Belt-and-braces: force C++ link language for tests

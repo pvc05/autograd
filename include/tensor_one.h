@@ -23,8 +23,9 @@ class TensorOne : public TensorBase {
   // Constructors, one for data vector, one for size + init value vector
   explicit TensorOne(const std::vector<double>& data,
                      bool requires_grad = false, Tape* tape = nullptr);
-  explicit TensorOne(int size, double init_value = 0.0,
+  explicit TensorOne(size_t size, double init_value = 0.0,
                      bool requires_grad = false, Tape* tape = nullptr);
+  explicit TensorOne(Tape* tape, size_t node_id);
 
   [[nodiscard]] std::vector<double> value() const;
   [[nodiscard]] std::vector<double> grad() const;
