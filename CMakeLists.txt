@@ -7,7 +7,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 
 add_library(autograd STATIC
-        src/operations.cpp
         src/tensor_one.cpp
         src/node.cpp
         src/tape/tape_one.cpp
@@ -15,6 +14,7 @@ add_library(autograd STATIC
         src/tape/tape_string.cpp
         src/ops/addition.cpp
         src/ops/subtraction.cpp
+        src/ops/multiplication.cpp
 )
 
 target_include_directories(autograd PUBLIC
