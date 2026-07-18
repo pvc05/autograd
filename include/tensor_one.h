@@ -30,7 +30,7 @@ class TensorOne : public TensorBase {
   [[nodiscard]] std::vector<double> value() const;
   [[nodiscard]] std::vector<double> grad() const;
   [[nodiscard]] size_t size() const;
-
+  void backward();
   [[nodiscard]] std::string to_string() const;
 };
 

@@ -10,7 +10,6 @@ add_library(autograd STATIC
         src/tensor_one.cpp
         src/node.cpp
         src/tape/tape_one.cpp
-        src/tape/tape_backward.cpp
         src/tape/tape_string.cpp
         src/ops/addition.cpp
         src/ops/subtraction.cpp
@@ -47,6 +46,8 @@ enable_testing()
 add_executable(autograd_tests
         tests/1d/basic.cpp
         tests/1d/basic_tape.cpp
+        tests/1d/advanced_tape.cpp
+        tests/1d/stress_tape.cpp
 )
 
 # Belt-and-braces: force C++ link language for tests

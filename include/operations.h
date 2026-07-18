@@ -10,7 +10,12 @@
 namespace autograd {
 
 // addition overloads
+TensorOne operator+(const TensorOne& a, double k);
+TensorOne operator+(double k, const TensorOne& a);
 TensorOne operator+(const TensorOne& a, const TensorOne& b);
+TensorOne& operator+=(TensorOne& a, double k);
+TensorOne& operator+=(double k, TensorOne& a);
+TensorOne& operator+=(TensorOne& a, const TensorOne& b);
 
 // subtraction overloads
 TensorOne operator-(const TensorOne& a, const TensorOne& b);
