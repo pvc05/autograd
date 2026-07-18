@@ -28,4 +28,17 @@ TEST(Basic1DTest, OperationWithTape) {
   EXPECT_EQ(tape.nodes.size(), 5);
 }
 
+TEST(Basic1DTest, OperationWithTapeSelf) {
+  Tape tape(TensorClass::TENSOR_ONE);
+  TensorOne a(std::vector<double>{1.0, 2.0, 3.0}, true, &tape);
+
+  TensorOne b = a + a;
+  TensorOne c = b * a;
+
+  EXPECT_EQ(c.data[0], 2.0);
+  EXPECT_EQ(c.data[1], 8.0);
+  EXPECT_EQ(c.data[2], 18.0);
+
+  EXPECT_EQ(tape.nodes.size(), 3);
+}
 }  // namespace autograd_tests

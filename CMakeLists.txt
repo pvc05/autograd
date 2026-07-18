@@ -13,7 +13,8 @@ add_library(autograd STATIC
         src/tape/tape_one.cpp
         src/tape/tape_backward.cpp
         src/tape/tape_string.cpp
-        src/ops/ops_one.cpp
+        src/ops/addition.cpp
+        src/ops/subtraction.cpp
 )
 
 target_include_directories(autograd PUBLIC

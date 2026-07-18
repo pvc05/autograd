@@ -9,8 +9,13 @@
 
 namespace autograd {
 
+// addition overloads
 TensorOne operator+(const TensorOne& a, const TensorOne& b);
+
+// subtraction overloads
 TensorOne operator-(const TensorOne& a, const TensorOne& b);
+
+// multiplication overloads
 TensorOne operator*(const TensorOne& a, const TensorOne& b);
 
 }  // namespace autograd
